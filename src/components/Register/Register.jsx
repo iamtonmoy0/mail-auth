@@ -10,6 +10,18 @@ const Register = () => {
 		e.preventDefault();
 		const email=e.target.email.value;
 		const password=e.target.password.value;
+		setError('')
+		setSuccess('')
+		if(!/(?=.*[A-Z])/.test(password)){
+			setError('please add at least one uppercase')
+			return
+		}else if(!/(?=.*[0-9].*[0-9])/.test(password)){
+			setError('please add at east 2 numbers')
+			return
+		}else if(password.length<6){
+			setError('please add at least 6  characters')
+			return
+		}
 		
 		createUserWithEmailAndPassword(auth,email,password)
 		.then(userCredential=>{
