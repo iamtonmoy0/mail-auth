@@ -1,7 +1,8 @@
 import {getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
+import app from "../../Firebase/Firebase.config";
 
-const auth=getAuth();
+const auth=getAuth(app);
 const Login = () => {
 
 const[error,setError]=useState('');
@@ -29,7 +30,12 @@ const handleLog=(e)=>{
 		signInWithEmailAndPassword(auth,email,password)
 		.then(credentials=>{
 			setError('')
-			setSuccess('logged in successfully')
+			
+			if(credentials.user.emailVerified){
+				setSuccess('logged in successfully')
+			}else{
+				setError('your account is not verified')
+			}
 
 		})
 		.catch(error=>{
